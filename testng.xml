@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name = "Hono Leave Suite">
+	<parameter name="browser" value="chrome" />
+	<parameter name="siteURL" value="https://devent8.hono.ai/react/" />
+	<parameter name="employeeUserName" value="1120100089" />
+	<parameter name="employeepPssword" value="1120100089" />
+	
+	<parameter name="levelOneManagerUserName" value="1120100158" />
+	<parameter name="LevelOneManagerPassword" value="1120100158" />
+	
+	<parameter name="levelTwoManagerUserName" value="1120100122" />
+	<parameter name="LevelTwoManagerPassword" value="1120100122" />
+
+<test name="create Leave test">
+	<classes>
+		<!-- <class
+			name="ai.hono.devnt8.create.leaverequest.test.CreateLeaveRequestTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.CancelLeaveRequestAfterLevelTwoReconsiderTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.ApproveLeaveRequestTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.CancelLeaveRequestAfterLevelTwoManagerApprovalTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.CancelleaveRequestTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.CancelLeaveRequestAfterLevelOneReconsiderTest" />
+		<class
+			name="ai.hono.devnt8.create.leaverequest.test.CancelLeaveRequestAfterLevelOneApprovalTest" /> 
+		<class name="ai.hono.devnt8.create.leaverequest.test.RejectLeaveRequestAfterLevelOneApprovalTest"/>
+			-->
+	</classes>
+</test> 
+
+
+	<test name="Cancel Leave Request test">
+		<classes>
+		   <!--  <class name="ai.hono.devnt8.create.leaverequest.test.CancelLeaveRequestAfterLevelTwoManagerApprovalTest"/> -->
+		    <!-- <class name="ai.hono.devnt8.create.leaverequest.test.ApproveLeaveRequestTest" /> -->
+		    <!-- <class name="ai.hono.devnt8.create.leaverequest.test.RejectLeaveRequestAfterLevelOneApprovalTest"/> -->
+		</classes>
+	</test>
+
+	<test  name="Leave Type Test">
+	    <classes>
+	      <!-- <class name="ai.hono.devnt8.leavetype.test.EditLeaveTypeTest"/> -->
+	      <class name="ai.hono.devnt8.leavetype.test.LeaveTypeTest"/>
+	    </classes>
+  	</test>
+
+
+</suite>
+

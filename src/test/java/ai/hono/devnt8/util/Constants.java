@@ -115,6 +115,10 @@ public class Constants {
 		
 		public static final String LEAVE_TYPE_CASUAL_LEAVE_TEST_TEXT="leave.type.casual.leave.test.text";
 		
+		public static final String UNPAID_LEAVE_TYPE_TEXT="unpaid.leave.type.text";
+		
+		public static final String UNPAID_LEAVE_REASON_TEXT="unpaid.leave.reason.text";
+		
 		public static final String SICK_LEAVE_TYPE_TEXT="sick.leave.type.text";
 		
 		public static final String LEAVE_TYPE_SICK_LEAVE_AG_P_TEXT="leave.type.sick.leave.agp.text";
@@ -259,7 +263,21 @@ public class Constants {
 		public static final String PLANNED_REASON_TEST_ONE_TEXT="planned.reason.test.one.text";
 		
 		public static final String PLANNED_REASON_TEST_TWO_TEXT="planned.reason.test.two.text";
+		
+		public static final String UNPLANNED_REASON_TEXT="unplanned.reason.text";
+		
+		public static final String UNPLANNED_REASON_PERSONAL_WORK_TEXT="unplanned.reason.personal.work.text";
+		
+		public static final String INVALID_FILE_TYPE_PLEASE_UPLOAD_VALID_A_VALID_FILE_TEXT="invalid.file.type.please.upload.valid.file";
 
-
-	
+		public static final String COMPENSATORY_OFF_LEAVE_REQUEST_TEXT="comp.off.leave.request.text";
+		
+		public static final String COMP_OFF_LEAVE_REQUEST_TEXT="comp.off.leave.request.text";
+		
+		
+		
+		
+		
+		
+		
 }

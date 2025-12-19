@@ -47,7 +47,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 		private static final Logger logger = Logger.getLogger(RejectLeaveRequestTest.class.getName());
 
 		@BeforeClass
-		@Parameters({ "browser", "siteURL", "employeeUserName", "employeepPssword" })
+		@Parameters({ "browser", "siteURL", "employeeUserName", "employeePassword" })
 		public void initMethodTest(String browser, String siteURL, String userName, String approverPassword)
 				throws Exception {
 			logger.info("Starting of initMethodTest method");

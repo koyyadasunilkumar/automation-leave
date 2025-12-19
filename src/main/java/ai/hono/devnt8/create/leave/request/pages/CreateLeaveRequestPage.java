@@ -37,6 +37,9 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 	
 	@FindBy(xpath = "//ul[@class='ant-menu-item-group-list']//following::li//span[@class='ant-menu-title-content' and text()='Create Leave Request']")
 	private WebElement lstCreateLeaveRequest;
+	
+	@FindBy(xpath = "//ul[@class='ant-menu-item-group-list']//following::li//span[@class='ant-menu-title-content' and text()='Create Comp Off Request']")
+	private WebElement lstCreateCompOffRequest;
 
 	@FindBys({ @FindBy(xpath = "//ul[@role='listbox']//li") })
 	private List<WebElement> lstLeaveType;
@@ -65,7 +68,7 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 	@FindBy(xpath = "//textarea[@name='text']")
 	private WebElement txtReason;
 
-	@FindBy(xpath = "//button[@aria-label='Submit']")
+	@FindBy(xpath = "//span[@aria-label='Submit']")
 	private WebElement btnSubmit;
 	
 	@FindBy(xpath = "//h5[contains(@class,'MuiTypography-root MuiTypography-h5')]")
@@ -83,22 +86,23 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 	@FindBy(xpath = "//span[contains(@class,'MuiChip-label MuiChip-labelSmall')]")
 	private WebElement lblLeaveRequestStatus;
 	
-	@FindBy(xpath = "//button[@aria-label='Pending for Approval']")
+//	@FindBy(xpath = "//button[@aria-label='Pending for Approval']")
+	@FindBy(xpath = "//span[@aria-label='Pending for Approval']")
 	private WebElement btnPendingForApprovalStatus;
 	
-	@FindBy(xpath = "//button[@aria-label='Approve']")
+	@FindBy(xpath = "//span[@aria-label='Approve']")
 	private WebElement btnApprove;
 	
-	@FindBy(xpath = "//button[@aria-label='Reject']")
+	@FindBy(xpath = "//span[@aria-label='Reject']")
 	private WebElement btnReject;
 	
-	@FindBy(xpath = "//button[@aria-label='Reconsider']")
+	@FindBy(xpath = "//span[@aria-label='Reconsider']")
 	private WebElement btnReconsider;
 	
 	@FindBy(xpath = "//div[contains(@class,'ant-layout site-layout no-scrollbars')]//span[contains(@class,'MuiTypography-root MuiTypography-pageHeading')]")
 	private WebElement lblApproveLeaveRequest;
 	
-	@FindBy(xpath = "//button[@aria-label='Cancellation Approval Pending']")
+	@FindBy(xpath = "//span[@aria-label='Cancellation Approval Pending']")
 	private WebElement btnCancellationApprovalPending;
 	
 	@FindBy(xpath = "//div[contains(@class,'MuiChip-root MuiChip-outlined MuiChip-sizeSmall MuiChip-colorPrimary MuiChip')]//span")
@@ -107,22 +111,22 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 	@FindBy(xpath = "//div[contains(@class,'ant-layout')]//span[text()='Leave Transactions']")
 	private WebElement lblTransactions;
 	
-	@FindBy(xpath = "//button[@aria-label='Approved']")
+	@FindBy(xpath = "//span[@aria-label='Approved']")
 	private WebElement btnApproved;
 	
-	@FindBy(xpath = "//button[@aria-label='Cancelled']")
+	@FindBy(xpath = "//span[@aria-label='Cancelled']")
 	private WebElement btnCancelled;
 	
-	@FindBy(xpath = "//button[@aria-label='Rejected']")
+	@FindBy(xpath = "//span[@aria-label='Rejected']")
 	private WebElement btnRejected;
 	
-	@FindBy(xpath = "//button[@aria-label='Cancel Request']")
+	@FindBy(xpath = "//span[@aria-label='Cancel Request']")
 	private WebElement btnCancelRequest;
 	
-	@FindBy(xpath = "//button[@aria-label='Cancellation Approved']")
+	@FindBy(xpath = "//span[@aria-label='Cancellation Approved']")
 	private WebElement btnCancellationApproved;
 	
-	@FindBy(xpath = "//button[@aria-label='Cancellation Rejected']")
+	@FindBy(xpath = "//span[@aria-label='Cancellation Rejected']")
 	private WebElement btnCancellationRejected;
 	
 	@FindBy(xpath = "//input[@aria-label='Toggle select all']")
@@ -197,7 +201,10 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 	
 	@FindBy(xpath = "//label[contains(@class,'MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd')]//following-sibling::span[text()='Unplanned Leave']")
 	private WebElement rdoUnPlannedLeave;
-
+	
+	
+	@FindBy(xpath = "//span[contains(text(),'Unplanned Leave')]")
+	private WebElement rdoUnplannedLeave;
 
 	@FindBy(xpath = "//div[contains(@label,'Reasons')]")
 	private WebElement lblSelectPlannedReasons;
@@ -1007,6 +1014,19 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 		logger.info("Starting of clickOnSelectPlannedReasonsDropdown method");
 	}
 	
+	public void clickOnSelectUnPlannedReasonsDropdown() {
+		logger.info("Starting of clickOnSelectUnPlannedReasonsDropdown method");
+
+		try {
+			scrollIntoView(lblSelectPlannedReasons);
+			lblSelectPlannedReasons.click();
+		} catch (Exception e) {
+			clickOnWebElement(lblSelectPlannedReasons);
+		}
+		
+		logger.info("Starting of clickOnSelectUnPlannedReasonsDropdown method");
+	}
+	
 	public void SelectPlannedReasons(String strReasons) {
 		logger.info("Starting of SelectPlannedReasons method");
 
@@ -1045,11 +1065,24 @@ public class CreateLeaveRequestPage extends BaseHonoLeavePage {
 
 		logger.info("Starting of SelectLeaveReason method");
 	}
+	
+	public void clickOnUnplannedLeaveRadioButton() {
+		logger.info("Starting of clickOnUnplannedLeaveRadioButton method");
+
+		try {
+			explicitWait(rdoUnplannedLeave);
+			rdoUnplannedLeave.click();
+		} catch (Exception e) {
+			clickOnWebElement(rdoUnplannedLeave);
+		}
+		
+		logger.info("Starting of clickOnUnplannedLeaveRadioButton method");
+	}
 
 
 	
 	
-
+	
 
 
 

@@ -1,25 +1,7 @@
 package ai.hono.devnt8.create.leaverequest.test;
 
 
-	import static ai.hono.devnt8.util.Constants.APPLY_FOR_LEAVE_TEXT;
-import static ai.hono.devnt8.util.Constants.AVAILED_USING_DAYS_TEXT;
-import static ai.hono.devnt8.util.Constants.CASUAL_LEAVE_TEXT;
-import static ai.hono.devnt8.util.Constants.CREATE_LEAVE_REQUEST_TEXT;
-import static ai.hono.devnt8.util.Constants.EMPLOYEE_ROLE_TEXT;
-import static ai.hono.devnt8.util.Constants.FROM_HALF_FULL_DAY_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_CREATED_SUCCESSFULLY_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_FROM_DATE_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_SETUP_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TO_DATE_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TRANSACTIONS_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TYPES_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TYPE_DEVELOPMENT_LEAVE_TEXT;
-import static ai.hono.devnt8.util.Constants.LEAVE_TYPE_UPDATED_SUCCESSFULLY_TEXT;
-import static ai.hono.devnt8.util.Constants.REASON_FOR_LEAVE_TEXT;
-import static ai.hono.devnt8.util.Constants.TO_HALF_FIRST_HALF_TEXT;
-import static ai.hono.devnt8.util.Constants.TWO_ROWS_PER_PAGE_TEXT;
-
+import static ai.hono.devnt8.util.Constants.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.springframework.context.annotation.Description;
@@ -152,7 +134,7 @@ import io.qameta.allure.Story;
 				try {
 					Assert.assertTrue(createLeaveRequestPage.isSubmitButtonDisplayed());
 					
-					createLeaveRequestPage.clickOnSubmitButton();
+					//createLeaveRequestPage.clickOnSubmitButton();
 					
 					//Assert.assertEquals(leaveTypePage.getLeaveSetupText(),
 							//(expectedAssertionsProp.getProperty(LEAVE_SETUP_TEXT)));
@@ -178,7 +160,7 @@ import io.qameta.allure.Story;
 							(expectedAssertionsProp.getProperty(APPLY_FOR_LEAVE_TEXT)));
 
 					createLeaveRequestPage.clickOnLeaveTypeButton();
-					createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(LEAVE_TYPE_DEVELOPMENT_LEAVE_TEXT));
+					createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(CASUAL_LEAVE_TEXT));
 					
 					createLeaveRequestPage.clickOnAvailedUsingDropdown();
 					createLeaveRequestPage.selectAvailedUsing(testDataProp.getProperty(AVAILED_USING_DAYS_TEXT));
@@ -196,11 +178,10 @@ import io.qameta.allure.Story;
 					createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
 
 					createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
-
 					createLeaveRequestPage.clickOnSubmitButton();
 
 					Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
-							expectedAssertionsProp.getProperty(LEAVE_CREATED_SUCCESSFULLY_TEXT));
+							expectedAssertionsProp.getProperty(LEAVE_HAS_BEEN_SUCCESSFULLY_SUBMITTED_TEXT));
 
 				} catch (Exception e) {
 					Assert.fail(

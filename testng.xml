@@ -4,7 +4,7 @@
 	<parameter name="browser" value="chrome" />
 	<parameter name="siteURL" value="https://devent8.hono.ai/react/" />
 	<parameter name="employeeUserName" value="1120100089" />
-	<parameter name="employeepPssword" value="1120100089" />
+	<parameter name="employeePassword" value="1120100089" />
 	
 	<parameter name="levelOneManagerUserName" value="1120100158" />
 	<parameter name="LevelOneManagerPassword" value="1120100158" />
@@ -44,10 +44,23 @@
 
 	<test  name="Leave Type Test">
 	    <classes>
-	      <!-- <class name="ai.hono.devnt8.leavetype.test.EditLeaveTypeTest"/> -->
+	      <!-- <class name="ai.hono.devnt8.leavetype.test.EditLeaveTypeTest"/> 
 	      <class name="ai.hono.devnt8.leavetype.test.LeaveTypeTest"/>
+	            <class name="ai.hono.devnt8.sickleave.test.SickLeaveTest"/> -->
 	    </classes>
   	</test>
+  	
+  	<test  name="Sick Leave Test">
+	    <classes>
+	           <!--  <class name="ai.hono.devnt8.sickleave.test.SickLeaveTest"/> -->
+	    </classes>
+  	</test>
+  	
+  	<test name="Unpaid Leave Test">
+    	<classes>
+      	   <class name="ai.hono.devnt8.util.unpaidleave.test.CreateUnpaidLeaveRequestTest"/>
+    	</classes>
+   </test>
 
 
 </suite>

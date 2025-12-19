@@ -47,7 +47,7 @@ package ai.hono.devnt8.sickleave.test;
 		private static final Logger logger = Logger.getLogger(SickLeaveTest.class.getName());
 
 		@BeforeClass
-		@Parameters({ "browser", "siteURL", "employeeUserName", "employeepPssword" })
+		@Parameters({ "browser", "siteURL", "employeeUserName", "employeePassword" })
 		public void initMethodTest(String browser, String siteURL, String userName, String approverPassword)
 				throws Exception {
 			logger.info("Starting of initMethodTest method");
@@ -155,8 +155,66 @@ package ai.hono.devnt8.sickleave.test;
 		@Description("Test Case #5, Verify Sick Leave request can be created without uploading an attachment.")
 		@Severity(SeverityLevel.CRITICAL)
 		@Story("Test Case #5, Verify Sick Leave request can be created without uploading an attachment.")
-		public void testCreateSickLeaveRequestWithoutFileAttachment() {
+		public void verifyCreateSickLeaveRequestWithoutFileAttachment() {
 			logger.info("Starting of testCreateSickLeaveRequestWithoutFileAttachment method");
+
+			try {
+				createLeaveRequestPage.clickOnLeaveTypeButton();
+
+				createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(SICK_LEAVE_TYPE_TEXT));
+				
+				createLeaveRequestPage.clickOnUnplannedLeaveRadioButton();
+				
+				createLeaveRequestPage.clickOnSelectUnPlannedReasonsDropdown();
+
+				createLeaveRequestPage.SelectPlannedReasons(testDataProp.getProperty(UNPLANNED_REASON_PERSONAL_WORK_TEXT));
+
+				createLeaveRequestPage.clickOnFromDate();
+
+				createLeaveRequestPage.clickOnNextMonthButton();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_FROM_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnFromHalfDropdown();
+
+				createLeaveRequestPage.selectFromHalf(testDataProp.getProperty(FROM_HALF_FULL_DAY_TEXT));
+
+				createLeaveRequestPage.clickOnToDate();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_TO_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnToHalfDropdown();
+
+				createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
+
+				//createLeaveRequestPage.clickOnSelectLeaveReasonDropdown();
+
+				//createLeaveRequestPage.SelectLeaveReason(testDataProp.getProperty(LEAVE_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
+
+				//createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_SICK_LEAVE_REQUEST_PDF_FILE_TEXT));
+
+				createLeaveRequestPage.clickOnSubmitButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(DOCUMENTS_REQUIRED_FOR_APPLYING_LEAVE_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing testCreateSickLeaveRequestWithoutFileAttachment : "
+						+ e.getMessage());
+				logger.error("Error occured while testCreateSickLeaveRequestWithoutFileAttachment " + e);
+			}
+
+			logger.info("Starting of testCreateSickLeaveRequestWithoutFileAttachment method");
+		}
+		
+		@Test(priority = 6, description = "Verify Sick Leave request can be created by uploading an Empty file.")
+		@Description("Test Case #6, Verify Sick Leave request can be created by uploading an Empty file.")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #6, Verify Sick Leave request can be created by uploading an Empty file.")
+		public void verifyCreateSickLeaveRequestByUploadEmptyFile() {
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadEmptyFile method");
 
 			try {
 				createLeaveRequestPage.clickOnLeaveTypeButton();
@@ -191,27 +249,194 @@ package ai.hono.devnt8.sickleave.test;
 
 				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
 
-				//createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_SICK_LEAVE_REQUEST_PDF_FILE_TEXT));
+				createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(FILE_IS_EMPTY_AND_CANNOT_UPLOADED_TEXT));
 
 				createLeaveRequestPage.clickOnSubmitButton();
 
 				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
-						expectedAssertionsProp.getProperty(DOCUMENTS_REQUIRED_FOR_APPLYING_LEAVE_TEXT));
+						expectedAssertionsProp.getProperty(FILE_IS_EMPTY_AND_CANNOT_UPLOADED_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing testCreateSickLeaveRequestWithoutFileAttachment : "
+				Assert.fail("Exception occured while testing verifyCreateSickLeaveRequestByUploadEmptyFile : "
 						+ e.getMessage());
-				logger.error("Error occured while testCreateSickLeaveRequestWithoutFileAttachment " + e);
+				logger.error("Error occured while verifyCreateSickLeaveRequestByUploadEmptyFile " + e);
 			}
 
-			logger.info("Starting of testCreateSickLeaveRequestWithoutFileAttachment method");
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadEmptyFile method");
+		}
+		
+		@Test(priority = 7, description = "Verify Sick Leave request can be created by uploading an large files.")
+		@Description("Test Case #7, Verify Sick Leave request can be created by uploading an large files.")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #7, Verify Sick Leave request can be created by uploading an large files.")
+		public void verifyCreateSickLeaveRequestByUploadLargeFile() {
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadLargeFile method");
+
+			try {
+				createLeaveRequestPage.clickOnLeaveTypeButton();
+
+				createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(SICK_LEAVE_TYPE_TEXT));
+
+				createLeaveRequestPage.clickOnSelectPlannedReasonsDropdown();
+
+				createLeaveRequestPage.SelectPlannedReasons(testDataProp.getProperty(PLANNED_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.clickOnFromDate();
+
+				createLeaveRequestPage.clickOnNextMonthButton();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_FROM_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnFromHalfDropdown();
+
+				createLeaveRequestPage.selectFromHalf(testDataProp.getProperty(FROM_HALF_FULL_DAY_TEXT));
+
+				createLeaveRequestPage.clickOnToDate();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_TO_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnToHalfDropdown();
+
+				createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
+
+				createLeaveRequestPage.clickOnSelectLeaveReasonDropdown();
+
+				createLeaveRequestPage.SelectLeaveReason(testDataProp.getProperty(LEAVE_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
+
+				createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_MORE_THAN_TWO_MB_FILE_TEXT));
+
+				createLeaveRequestPage.clickOnSubmitButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(FILE_MUST_BE_SMALLER_THAN_TWO_MB_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCreateSickLeaveRequestByUploadLargeFile : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCreateSickLeaveRequestByUploadLargeFile " + e);
+			}
+
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadLargeFile method");
+		}
+		
+		@Test(priority = 8, description = "Verify Sick Leave request can be created by uploading more than four files.")
+		@Description("Test Case #8, Verify Sick Leave request can be created by uploading more than four files.")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #8, Verify Sick Leave request can be created by uploading more than four files.")
+		public void verifyCreateSickLeaveRequestByUploadMoreThanFourFiles() {
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadMoreThanFourFiles method");
+
+			try {
+				createLeaveRequestPage.clickOnLeaveTypeButton();
+
+				createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(SICK_LEAVE_TYPE_TEXT));
+
+				createLeaveRequestPage.clickOnSelectPlannedReasonsDropdown();
+
+				createLeaveRequestPage.SelectPlannedReasons(testDataProp.getProperty(PLANNED_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.clickOnFromDate();
+
+				createLeaveRequestPage.clickOnNextMonthButton();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_FROM_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnFromHalfDropdown();
+
+				createLeaveRequestPage.selectFromHalf(testDataProp.getProperty(FROM_HALF_FULL_DAY_TEXT));
+
+				createLeaveRequestPage.clickOnToDate();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_TO_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnToHalfDropdown();
+
+				createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
+
+				createLeaveRequestPage.clickOnSelectLeaveReasonDropdown();
+
+				createLeaveRequestPage.SelectLeaveReason(testDataProp.getProperty(LEAVE_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
+
+				createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_FIVE_DIFFERENT_FILE_TYPES_LIST_TEXT));
+
+				createLeaveRequestPage.clickOnSubmitButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(YOU_CAN_UPLOAD_MAXIMUM_OF_FOUR_FILES_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCreateSickLeaveRequestByUploadMoreThanFourFiles : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCreateSickLeaveRequestByUploadMoreThanFourFiles " + e);
+			}
+
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadMoreThanFourFiles method");
+		}
+		
+		@Test(priority = 9, description = "Verify Sick Leave request can be created by uploading unsaported files.")
+		@Description("Test Case #9, Verify Sick Leave request can be created by uploading unsaported files.")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #9, Verify Sick Leave request can be created by uploading unsaported files.")
+		public void verifyCreateSickLeaveRequestByUploadUnsaportedFiles() {
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadUnsaportedFiles method");
+
+			try {
+				createLeaveRequestPage.clickOnLeaveTypeButton();
+
+				createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(SICK_LEAVE_TYPE_TEXT));
+
+				createLeaveRequestPage.clickOnSelectPlannedReasonsDropdown();
+
+				createLeaveRequestPage.SelectPlannedReasons(testDataProp.getProperty(PLANNED_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.clickOnFromDate();
+
+				createLeaveRequestPage.clickOnNextMonthButton();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_FROM_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnFromHalfDropdown();
+
+				createLeaveRequestPage.selectFromHalf(testDataProp.getProperty(FROM_HALF_FULL_DAY_TEXT));
+
+				createLeaveRequestPage.clickOnToDate();
+
+				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_TO_DATE_TEXT));
+
+				createLeaveRequestPage.clickOnToHalfDropdown();
+
+				createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
+
+				createLeaveRequestPage.clickOnSelectLeaveReasonDropdown();
+
+				createLeaveRequestPage.SelectLeaveReason(testDataProp.getProperty(LEAVE_REASON_TEST_ONE_TEXT));
+
+				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
+
+				createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_JAVA_SCRIPT_FILE_TEXT));
+
+				createLeaveRequestPage.clickOnSubmitButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(INVALID_FILE_TYPE_PLEASE_UPLOAD_VALID_A_VALID_FILE_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCreateSickLeaveRequestByUploadUnsaportedFiles : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCreateSickLeaveRequestByUploadUnsaportedFiles " + e);
+			}
+
+			logger.info("Starting of verifyCreateSickLeaveRequestByUploadUnsaportedFiles method");
 		}
 
-
-		@Test(priority = 5, description = "Verify Crete Leave Request by giving all valid details")
-		@Description("Test Case #5, Verify Crete Leave Request by giving all valid details")
+		@Test(priority = 10, description = "Verify Crete Leave Request by giving all valid details")
+		@Description("Test Case #10, Verify Crete Leave Request by giving all valid details")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #5, Verify Crete Leave Request by giving all valid details")
+		@Story("Test Case #10, Verify Crete Leave Request by giving all valid details")
 		public void verifyCreateSickLeaveRequestByGivingAllValidDetails() {
 			logger.info("Starting of verifyCreateLeaveRequestByGivingAllValidDetails method");
 
@@ -264,10 +489,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyCreateSickLeaveRequestByGivingAllValidDetails method");
 		}
 
-		@Test(priority = 6, description = "Verify the leave request details by select Leave Transactions")
-		@Description("Test Case #6, Verify the leave request details by select Leave Transactions")
+		@Test(priority = 11, description = "Verify the leave request details by select Leave Transactions")
+		@Description("Test Case #11, Verify the leave request details by select Leave Transactions")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #6, Verify the leave request details by select pending for approval status transaction")
+		@Story("Test Case #11, Verify the leave request details by select pending for approval status transaction")
 		public void verifyLeaveRequestTransactionDetails() {
 			logger.info("Starting of verifyLeaveRequestTransactionDetails method");
 
@@ -287,10 +512,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyLeaveRequestTransactionDetails method");
 		}
 
-		@Test(priority = 7, description = "Verify Created Leave Request details by selecting Rows per page")
-		@Description("Test Case #7, Verify Created Leave Request details by selecting Rows per page")
+		@Test(priority = 12, description = "Verify Created Leave Request details by selecting Rows per page")
+		@Description("Test Case #12, Verify Created Leave Request details by selecting Rows per page")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #7, Verify Created Leave Request details by selecting Rows per page")
+		@Story("Test Case #12, Verify Created Leave Request details by selecting Rows per page")
 		public void verifyLeaveRequestDetailsBySelectRowsPerPage() {
 			logger.info("Starting of verifyLeaveRequestDetailsBySelectRowsPerPage method");
 
@@ -311,10 +536,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyLeaveRequestDetailsBySelectRowsPerPage method");
 		}
 
-		@Test(priority = 8, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
-		@Description("Test Case #8, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Test(priority = 13, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Description("Test Case #13, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #8, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Story("Test Case #13, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		public void verifyLeaveTransactionDetailsBySelectPendingForApproval() {
 			logger.info("Starting of verifyLeaveTransactionDetailsBySelectPendingForApproval method");
 
@@ -341,10 +566,10 @@ package ai.hono.devnt8.sickleave.test;
 		}
 
 		@Parameters({ "browser", "siteURL", "levelOneManagerUserName", "LevelOneManagerPassword" })
-		@Test(priority = 9, description = "Verify Dashboard Details after giving a valid User Name & password for Level one manager")
-		@Description("Test Case #9, Verify Dashboard Details after giving a valid User Name & password for Level one manager")
+		@Test(priority = 14, description = "Verify Dashboard Details after giving a valid User Name & password for Level one manager")
+		@Description("Test Case #14, Verify Dashboard Details after giving a valid User Name & password for Level one manager")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #9, Verify Dashboard Details after giving a valid User Name & Password for Level one manager")
+		@Story("Test Case #14, Verify Dashboard Details after giving a valid User Name & Password for Level one manager")
 		public void verifyDashboardDetailsByGivingValidCredentials(String browser, String siteURL, String approverUserName,
 				String approverPassword) {
 			logger.info("Starting of verifyDashboardDetailsByGivingValidCredentials method");
@@ -370,10 +595,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyDashboardDetailsByGivingValidCredentials method");
 		}
 
-		@Test(priority = 10, description = "Verify the leave request details by select Leave Transactions from level one manager")
-		@Description("Test Case #10, Verify the leave request details by select Leave Transactions from level one manager")
+		@Test(priority = 15, description = "Verify the leave request details by select Leave Transactions from level one manager")
+		@Description("Test Case #15, Verify the leave request details by select Leave Transactions from level one manager")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #10, Verify the leave request details by select Leave Transactions from level one manager")
+		@Story("Test Case #15, Verify the leave request details by select Leave Transactions from level one manager")
 		public void verifyLeaveTransactionDetailsFromLevelOneManger() {
 			logger.info("Starting of verifyLeaveTransactionDetailsFromLevelOneManger method");
 
@@ -393,10 +618,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyLeaveTransactionDetailsFromLevelOneManger method");
 		}
 
-		@Test(priority = 11, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
-		@Description("Test Case #11, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Test(priority = 16, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Description("Test Case #16, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #11, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
+		@Story("Test Case #16, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		public void verifyPendingForApprovalTransactionDetails() {
 			logger.info("Starting of verifyPendingForApprovalTransactionDetails method");
 
@@ -429,10 +654,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyPendingForApprovalTransactionDetails method");
 		}
 
-		@Test(priority = 12, description = "Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
-		@Description("Test Case #12, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		@Test(priority = 17, description = "Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		@Description("Test Case #17, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #12, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		@Story("Test Case #17, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
 		public void verifyCancelLeaveRequestByWithoutEnteringReason() {
 			logger.info("Starting of verifyCanvcelLeaveRequestByWithoutEnteringReason method");
 
@@ -456,10 +681,10 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyCanvcelLeaveRequestByWithoutEnteringReason method");
 		}
 
-		@Test(priority = 13, description = "Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
-		@Description("Test Case #13, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		@Test(priority = 18, description = "Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		@Description("Test Case #18, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #13, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		@Story("Test Case #18, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
 		public void verifyCancelLeaveRequestByEmployee() {
 			logger.info("Starting of verifyCancelLeaveRequestByEmployee method");
 
@@ -483,12 +708,12 @@ package ai.hono.devnt8.sickleave.test;
 			logger.info("Starting of verifyCancelLeaveRequestByEmployee method");
 		}
 
-		@Test(priority = 14, description = "Verify the Recently cancelled Leave Transaction details by employee")
-		@Description("Test Case #14, Verify the Recently cancelled Leave Transaction details by employee")
+		@Test(priority = 19, description = "Verify the Recently cancelled Sick Leave Transaction details by employee")
+		@Description("Test Case #19, Verify the Recently cancelled Sick Leave Transaction details by employee")
 		@Severity(SeverityLevel.NORMAL)
-		@Story("Test Case #14, Verify the Recently cancelled Leave Transaction details by employee")
-		public void verifyCancelledLeaveTransactionStatusByEmployee() {
-			logger.info("Starting of verifyCancelledLeaveTransactionStatusByEmployee method");
+		@Story("Test Case #19, Verify the Recently cancelled Sick Leave Transaction details by employee")
+		public void verifyCancelledSickLeaveTransactionStatusByEmployee() {
+			logger.info("Starting of verifyCancelledSickLeaveTransactionStatusByEmployee method");
 
 			try {
 				createLeaveRequestPage.clickOnMenuOpenButton();

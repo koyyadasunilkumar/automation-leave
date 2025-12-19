@@ -1,4 +1,5 @@
-package ai.hono.devnt8.create.leaverequest.test;
+package ai.hono.devnt8.compensatoryoff.leave.test;
+
 
 	import static ai.hono.devnt8.util.Constants.*;
 
@@ -11,7 +12,8 @@ package ai.hono.devnt8.create.leaverequest.test;
 	import org.testng.annotations.Test;
 
 	import ai.hono.devnt8.base.test.BaseHonoLeaveTest;
-	import ai.hono.devnt8.create.leave.request.pages.CreateLeaveRequestPage;
+import ai.hono.devnt8.compensatoryoff.leave.pages.CreateCompensatoryLeaveRequestPage;
+import ai.hono.devnt8.create.leave.request.pages.CreateLeaveRequestPage;
 	import ai.hono.devnt8.leave.type.pages.LeaveTypePage;
 	import ai.hono.devnt8.login.page.HonoLeaveLoginPage;
 	import io.qameta.allure.Epic;
@@ -20,9 +22,9 @@ package ai.hono.devnt8.create.leaverequest.test;
 	import io.qameta.allure.SeverityLevel;
 	import io.qameta.allure.Story;
 
-	@Epic("Hono Leave")
-	@Feature("Reject leave request after level one approval test")
-	public class RejectLeaveRequestAfterLevelOneApprovalTest extends BaseHonoLeaveTest {
+	@Epic("Hono Leave Request")
+	@Feature("Create Compensatory Off LeaveRequest test")
+	public class CreateCompensatoryOffLeaveRequestTest extends BaseHonoLeaveTest {
 
 		private WebDriver driver = null;
 		private WebDriver approverOneDriver = null;
@@ -43,8 +45,12 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 		public String Profile_Status = null;
 		public String short_name = null;
+		
+		private CreateCompensatoryLeaveRequestPage createCompensatoryLeaveRequestPage = null;
+		
 
-		private static final Logger logger = Logger.getLogger(RejectLeaveRequestAfterLevelOneApprovalTest.class.getName());
+		private static final Logger logger = Logger
+				.getLogger(CreateCompensatoryOffLeaveRequestTest.class.getName());
 
 		@BeforeClass
 		@Parameters({ "browser", "siteURL", "employeeUserName", "employeePassword" })
@@ -52,7 +58,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 				throws Exception {
 			logger.info("Starting of initMethodTest method");
 
-			driver = this.getWebDriver(browser, WEB_DRIVER.CREATE_LEAVE_REQUEST);
+			driver = this.getWebDriver(browser, WEB_DRIVER.COMPENSATORY_OFF_LEAVE_REQUEST);
 			loginToHono(browser, siteURL, userName, approverPassword, this.driver);
 
 			loginPage = new HonoLeaveLoginPage(driver);
@@ -70,7 +76,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 			logger.info("Starting of verifyDashboardDetailsAfterLoginWithValidDetails method");
 
 			try {
-				// leaveTypePage.selectRole(testDataProp.getProperty(MY_ACCESS_ROLE_TEXT));
+				//leaveTypePage.selectRole(testDataProp.getProperty(MY_ACCESS_ROLE_TEXT));
 
 				Thread.sleep(3000);
 				Assert.assertEquals(loginPage.getDashboardText(),
@@ -97,8 +103,8 @@ package ai.hono.devnt8.create.leaverequest.test;
 				createLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
 				Thread.sleep(1000);
 
-				Assert.assertEquals(createLeaveRequestPage.getLeaveRequestText(),
-						expectedAssertionsProp.getProperty(CREATE_LEAVE_REQUEST_TEXT));
+				Assert.assertEquals(createCompensatoryLeaveRequestPage.getCompOffLeaveRequestText(),
+						expectedAssertionsProp.getProperty(COMPENSATORY_OFF_LEAVE_REQUEST_TEXT));
 
 			} catch (Exception e) {
 				Assert.fail("Exception occured while testing verifyDashboardBySelectLeave : " + e.getMessage());
@@ -117,11 +123,11 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 			try {
 				createLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
-				createLeaveRequestPage.clickOnCreateLeaveRequest();
+				createCompensatoryLeaveRequestPage.clickOnCreateCompOffRequest();
 				Thread.sleep(3000);
 
-				Assert.assertEquals(createLeaveRequestPage.getCreateLeaveRequestText(),
-						expectedAssertionsProp.getProperty(APPLY_FOR_LEAVE_TEXT));
+				Assert.assertEquals(createCompensatoryLeaveRequestPage.getCompensatoryOffRequestLabelText(),
+						expectedAssertionsProp.getProperty(COMP_OFF_LEAVE_REQUEST_TEXT));
 
 			} catch (Exception e) {
 				Assert.fail(
@@ -132,67 +138,48 @@ package ai.hono.devnt8.create.leaverequest.test;
 			logger.info("Starting of verifyOnboardingBySelectCandidatesProfile method");
 		}
 
-		@Test(priority = 4, description = "Verify Create Leave Request details by selecting Submit button")
-		@Description("Test Case #4, Verify Create Leave Request details by selecting Submit button")
+		@Test(priority = 5, description = "Verify Crete Comp Off Leave Request by giving all valid details")
+		@Description("Test Case #5, Verify Crete Comp Off Leave Request by giving all valid details")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #4, Verify Create Leave Request details by selecting Submit button")
-		public void verifyLeaveTypeDetailsBySelectSubmitButton() {
-			logger.info("Starting of verifyLeaveTypeDetailsBySelectSubmitButton method");
-
-			try {
-				Assert.assertTrue(createLeaveRequestPage.isSubmitButtonDisplayed());
-
-			} catch (Exception e) {
-				Assert.fail(
-						"Exception occured while testing verifyLeaveTypeDetailsBySelectSubmitButton : " + e.getMessage());
-				logger.error("Error occured while verifyLeaveTypeDetailsBySelectSubmitButton " + e);
-			}
-
-			logger.info("Starting of verifyLeaveTypeDetailsBySelectSubmitButton method");
-		}
-
-		@Test(priority = 5, description = "Verify Crete Leave Request by giving all valid details")
-		@Description("Test Case #5, Verify Crete Leave Request by giving all valid details")
-		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #5, Verify Crete Leave Request by giving all valid details")
+		@Story("Test Case #5, Verify Crete Comp Off Leave Request by giving all valid details")
 		public void verifyCreateLeaveRequestByGivingAllValidDetails() {
 			logger.info("Starting of verifyCreateLeaveRequestByGivingAllValidDetails method");
 
 			try {
 				createLeaveRequestPage.clickOnLeaveTypeButton();
-
+				
 				createLeaveRequestPage.selectLeaveType(testDataProp.getProperty(LEAVE_TYPE_CASUAL_LEAVE_TEST_TEXT));
 
 				createLeaveRequestPage.clickOnSelectPlannedReasonsDropdown();
-
+				
 				createLeaveRequestPage.SelectPlannedReasons(testDataProp.getProperty(PLANNED_REASON_TEST_ONE_TEXT));
 
 				createLeaveRequestPage.clickOnFromDate();
-
+				
 				createLeaveRequestPage.clickOnNextMonthButton();
-
+				
 				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_FROM_DATE_TEXT));
 
 				createLeaveRequestPage.clickOnFromHalfDropdown();
-
+				
 				createLeaveRequestPage.selectFromHalf(testDataProp.getProperty(FROM_HALF_FULL_DAY_TEXT));
-
+				
 				createLeaveRequestPage.clickOnToDate();
-
+				
 				createLeaveRequestPage.selectDate(testDataProp.getProperty(LEAVE_TO_DATE_TEXT));
-
+				
 				createLeaveRequestPage.clickOnToHalfDropdown();
-
+				
 				createLeaveRequestPage.selectToHalf(testDataProp.getProperty(TO_HALF_FIRST_HALF_TEXT));
 
 				createLeaveRequestPage.clickOnSelectLeaveReasonDropdown();
-
+				
 				createLeaveRequestPage.SelectLeaveReason(testDataProp.getProperty(LEAVE_REASON_TEST_ONE_TEXT));
 
 				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_LEAVE_TEXT));
-
-				// createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_LEAVE_REQUEST_FILE_TEXT));
-
+				
+				//createLeaveRequestPage.clickOnUploadDocumentButton(testDataProp.getProperty(UPLOAD_LEAVE_REQUEST_FILE_TEXT));
+				
 				createLeaveRequestPage.clickOnSubmitButton();
 
 				Assert.assertEquals(leaveTypePage.getLeaveCreatedSuccessfullyToastMessage(),
@@ -282,14 +269,13 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 			logger.info("Starting of verifyLeaveTransactionDetailsBySelectPendingForApproval method");
 		}
-
+		
 		@Parameters({ "browser", "siteURL", "levelOneManagerUserName", "LevelOneManagerPassword" })
 		@Test(priority = 9, description = "Verify Dashboard Details after giving a valid User Name & password for Level one manager")
 		@Description("Test Case #9, Verify Dashboard Details after giving a valid User Name & password for Level one manager")
 		@Severity(SeverityLevel.CRITICAL)
 		@Story("Test Case #9, Verify Dashboard Details after giving a valid User Name & Password for Level one manager")
-		public void verifyDashboardDetailsByGivingValidCredentials(String browser, String siteURL, String approverUserName,
-				String approverPassword) {
+		public void verifyDashboardDetailsByGivingValidCredentials(String browser, String siteURL, String approverUserName, String approverPassword) {
 			logger.info("Starting of verifyDashboardDetailsByGivingValidCredentials method");
 
 			try {
@@ -312,7 +298,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 			logger.info("Starting of verifyDashboardDetailsByGivingValidCredentials method");
 		}
-
+		
 		@Test(priority = 10, description = "Verify the leave request details by select Leave Transactions from level one manager")
 		@Description("Test Case #10, Verify the leave request details by select Leave Transactions from level one manager")
 		@Severity(SeverityLevel.CRITICAL)
@@ -328,14 +314,13 @@ package ai.hono.devnt8.create.leaverequest.test;
 						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing verifyLeaveTransactionDetailsFromLevelOneManger : "
-						+ e.getMessage());
+				Assert.fail("Exception occured while testing verifyLeaveTransactionDetailsFromLevelOneManger : " + e.getMessage());
 				logger.error("Error occured while verifyLeaveTransactionDetailsFromLevelOneManger " + e);
 			}
 
 			logger.info("Starting of verifyLeaveTransactionDetailsFromLevelOneManger method");
 		}
-
+		
 		@Test(priority = 11, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Description("Test Case #11, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Severity(SeverityLevel.CRITICAL)
@@ -350,7 +335,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 				approverOneLeaveTypePage.selectRowsPerPage(testDataProp.getProperty(TWO_ROWS_PER_PAGE_TEXT));
 				Thread.sleep(2000);
 				approverOneCreateLeaveRequestPage.clickOnScroll();
-
+				
 				approverOneCreateLeaveRequestPage.clickOnPendingForApprovalButton();
 				Thread.sleep(5000);
 
@@ -364,19 +349,20 @@ package ai.hono.devnt8.create.leaverequest.test;
 						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_PENDING_FOR_APPROVAL_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail(
-						"Exception occured while testing verifyPendingForApprovalTransactionDetails : " + e.getMessage());
+				Assert.fail("Exception occured while testing verifyPendingForApprovalTransactionDetails : "
+						+ e.getMessage());
 				logger.error("Error occured while verifyPendingForApprovalTransactionDetails " + e);
 			}
 
 			logger.info("Starting of verifyPendingForApprovalTransactionDetails method");
 		}
-
+		
+		
 		@Test(priority = 12, description = "Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
 		@Description("Test Case #12, Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
 		@Severity(SeverityLevel.CRITICAL)
 		@Story("Test Case #12, Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
-		public void verifyApproveLeaveRequestByWithoutEnteringReason() throws Exception {
+		public void verifyApproveLeaveRequestByWithoutEnteringReason()throws Exception {
 			logger.info("Starting of verifyApproveLeaveRequestByWithoutEnteringReason method");
 
 			try {
@@ -394,7 +380,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 				logger.error("Error occured while verifyApproveLeaveRequestByWithoutEnteringReason " + e);
 			}
 
-			logger.info("Ending of verifyApproveLeaveRequestByWithoutEnteringReason method");
+			logger.info("Ending of initMethodTest method");
 		}
 
 		@Test(priority = 13, description = "Verify the Leave Transaction details by selecting the Approve option and entering Reason text")
@@ -442,21 +428,19 @@ package ai.hono.devnt8.create.leaverequest.test;
 						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_PENDING_FOR_APPROVAL_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing VerifyLeaveRequestStatusAfterApprovedByLevelOneManager : "
-						+ e.getMessage());
+				Assert.fail("Exception occured while testing VerifyLeaveRequestStatusAfterApprovedByLevelOneManager : " + e.getMessage());
 				logger.error("Error occured while VerifyLeaveRequestStatusAfterApprovedByLevelOneManager " + e);
 			}
 
 			logger.info("Starting of VerifyLeaveRequestStatusAfterApprovedByLevelOneManager method");
 		}
-
+		
 		@Parameters({ "browser", "siteURL", "levelTwoManagerUserName", "LevelTwoManagerPassword" })
 		@Test(priority = 15, description = "Verify Dashboard Details after giving a valid User Name & password for Level two manager")
 		@Description("Test Case #15, Verify Dashboard Details after giving a valid User Name & password for Level two manager")
 		@Severity(SeverityLevel.CRITICAL)
 		@Story("Test Case #15, Verify Dashboard Details after giving a valid User Name & Password for Level two manager")
-		public void verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials(String browser, String siteURL,
-				String approverUserName, String approverPassword) {
+		public void verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials(String browser, String siteURL, String approverUserName, String approverPassword) {
 			logger.info("Starting of verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials method");
 
 			try {
@@ -472,15 +456,14 @@ package ai.hono.devnt8.create.leaverequest.test;
 						expectedAssertionsProp.getProperty(DASHBOARD_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail(
-						"Exception occured while testing verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials : "
-								+ e.getMessage());
+				Assert.fail("Exception occured while testing verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials : "
+						+ e.getMessage());
 				logger.error("Error occured while verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials " + e);
 			}
 
 			logger.info("Starting of verifyLevelTwoApprovalDashboardDetailsByGivingValidCredentials method");
 		}
-
+		
 		@Test(priority = 16, description = "Verify the leave request details by select Leave Transactions from level two manager")
 		@Description("Test Case #16, Verify the leave request details by select Leave Transactions from level two manager")
 		@Severity(SeverityLevel.CRITICAL)
@@ -496,14 +479,13 @@ package ai.hono.devnt8.create.leaverequest.test;
 						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing verifyLeaveTransactionDetailsFromLevelTwoManger : "
-						+ e.getMessage());
+				Assert.fail("Exception occured while testing verifyLeaveTransactionDetailsFromLevelTwoManger : " + e.getMessage());
 				logger.error("Error occured while verifyLeaveTransactionDetailsFromLevelTwoManger " + e);
 			}
 
 			logger.info("Starting of verifyLeaveTransactionDetailsFromLevelTwoManger method");
 		}
-
+		
 		@Test(priority = 17, description = "Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Description("Test Case #17, Verify the leave transactions details by selecting the leave transaction status as Pending for approval ")
 		@Severity(SeverityLevel.CRITICAL)
@@ -511,7 +493,7 @@ package ai.hono.devnt8.create.leaverequest.test;
 		public void verifyLeaveTransactionDetailsAfterLevelOneApproval() {
 			logger.info("Starting of verifyLeaveTransactionDetailsAfterLevelOneApproval method");
 
-			try {
+			try {			
 				approverTwoCreateLeaveRequestPage.clickOnPendingForApprovalButton();
 				Thread.sleep(5000);
 
@@ -532,37 +514,38 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 			logger.info("Starting of verifyLeaveTransactionDetailsAfterLevelOneApproval method");
 		}
-
-		@Test(priority = 18, description = "Verify the Leave Transaction details by selecting the Reject option without entering Reason text")
-		@Description("Test Case #18, Verify the Leave Transaction details by selecting the Reject option without entering Reason text")
+		
+		@Test(priority = 18, description = "Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
+		@Description("Test Case #18, Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #18, Verify the Leave Transaction details by selecting the Reject option without entering Reason text")
-		public void verifyRejectLeaveWithoutReason() throws Exception {
-			logger.info("Starting of verifyRejectLeaveWithoutReason method");
+		@Story("Test Case #18, Verify the Leave Transaction details by selecting the Approve option without entering Reason text")
+		public void verifyApproveLeaveWithoutReason()throws Exception {
+			logger.info("Starting of verifyApproveLeaveWithoutReason method");
 
 			try {
 				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getApproveLeaveRequestText(),
 						(expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT)));
 
-				approverTwoCreateLeaveRequestPage.clickOnRejectButton();
+				approverTwoCreateLeaveRequestPage.clickOnApproveButton();
 
 				Assert.assertEquals(approverTwoLeaveTypePage.getLeaveToastMessage(),
 						expectedAssertionsProp.getProperty(PLEASE_ENTER_REMARKS_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing verifyRejectLeaveWithoutReason : " + e.getMessage());
-				logger.error("Error occured while verifyRejectLeaveWithoutReason " + e);
+				Assert.fail("Exception occured while testing verifyApproveLeaveWithoutReason : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyApproveLeaveWithoutReason " + e);
 			}
 
-			logger.info("Ending of verifyRejectLeaveWithoutReason method");
+			logger.info("Ending of verifyApproveLeaveWithoutReason method");
 		}
 
-		@Test(priority = 19, description = "Verify the Leave Transaction details by selecting the Reject option and entering Reason text")
-		@Description("Test Case #19, Verify the Leave Transaction details by selecting the Reject option and entering Reason text")
+		@Test(priority = 19, description = "Verify the Leave Transaction details by selecting the Approve option and entering Reason text")
+		@Description("Test Case #19, Verify the Leave Transaction details by selecting the Approve option and entering Reason text")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #19, Verify the Leave Transaction details by selecting the Reject option and entering Reason text")
-		public void verifyRejectLeaveRequestByGivingReason() {
-			logger.info("Starting of verifyRejectLeaveRequestByGivingReason method");
+		@Story("Test Case #19, Verify the Leave Transaction details by selecting the Approve option and entering Reason text")
+		public void verifyApproveLeaveRequestByGivingReason() {
+			logger.info("Starting of verifyApproveLeaveRequestBySelectApproveOption method");
 
 			try {
 				approverTwoCreateLeaveRequestPage.clickOnCloseButton();
@@ -570,52 +553,51 @@ package ai.hono.devnt8.create.leaverequest.test;
 				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getApproveLeaveRequestText(),
 						(expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT)));
 
-				approverTwoCreateLeaveRequestPage.setRemarks(testDataProp.getProperty(REJECT_REMARKS_TEXT));
-				approverTwoCreateLeaveRequestPage.clickOnRejectButton();
+				approverTwoCreateLeaveRequestPage.setRemarks(testDataProp.getProperty(APPROVE_REMARKS_TEXT));
+				approverTwoCreateLeaveRequestPage.clickOnApproveButton();
 
 				Assert.assertEquals(approverTwoLeaveTypePage.getLeaveToastMessage(),
-						expectedAssertionsProp.getProperty(LEAVE_REQUEST_REJECTED_SUCCESSFULLY_TEXT));
+						expectedAssertionsProp.getProperty(LEAVE_REQUEST_APPROVED_SUCCESSFULLY_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing verifyRejectLeaveRequestByGivingReason : "
+				Assert.fail("Exception occured while testing verifyApproveLeaveRequestBySelectApproveOption : "
 						+ e.getMessage());
-				logger.error("Error occured while verifyRejectLeaveRequestByGivingReason " + e);
+				logger.error("Error occured while verifyApproveLeaveRequestBySelectApproveOption " + e);
 			}
 
-			logger.info("Starting of verifyRejectLeaveRequestByGivingReason method");
+			logger.info("Starting of verifyApproveLeaveRequestBySelectApproveOption method");
 		}
 
-		@Test(priority = 20, description = "Verify the Leave Transaction Status details after Rejected by Level two manager")
-		@Description("Test Case #20, Verify the Leave Transaction Status details after Rejected by Level two manager")
+		@Test(priority = 20, description = "Verify the Leave Transaction Status details after approved by Level two manager")
+		@Description("Test Case #20, Verify the Leave Transaction Status details after approved by Level two manager")
 		@Severity(SeverityLevel.CRITICAL)
-		@Story("Test Case #20, Verify the Leave Transaction Status details after Rejected by Level two manager")
-		public void VerifyLeaveRequestStatusAfterRejectedByLevelTwoManager() {
-			logger.info("Starting of VerifyLeaveRequestStatusAfterRejectedByLevelTwoManager method");
+		@Story("Test Case #20, Verify the Leave Transaction Status details after approved by Level two manager")
+		public void VerifyLeaveRequestStatusAfterApprovedByLevelTwoManager() {
+			logger.info("Starting of VerifyLeaveRequestStatusAfterApprovedByLevelTwoManager method");
 
 			try {
-				approverTwoCreateLeaveRequestPage.clickOnRejectedButton();
+				approverTwoCreateLeaveRequestPage.clickOnApprovedButton();
 
 				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
 						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_APPROVED_TEXT));
 
 				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
-						expectedAssertionsProp.getProperty(LEAVE_APPROVAL_STATUS_REJECTED_TEXT));
+						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_APPROVED_TEXT));
 
 			} catch (Exception e) {
-				Assert.fail("Exception occured while testing VerifyLeaveRequestStatusAfterRejectedByLevelTwoManager : "
-						+ e.getMessage());
-				logger.error("Error occured while VerifyLeaveRequestStatusAfterRejectedByLevelTwoManager " + e);
+				Assert.fail("Exception occured while testing VerifyLeaveRequestStatusAfterApprovedByLevelTwoManager : " + e.getMessage());
+				logger.error("Error occured while VerifyLeaveRequestStatusAfterApprovedByLevelTwoManager " + e);
 			}
 
-			logger.info("Starting of VerifyLeaveRequestStatusAfterRejectedByLevelTwoManager method");
+			logger.info("Starting of VerifyLeaveRequestStatusAfterApprovedByLevelTwoManager method");
 		}
 
-		@Test(priority = 21, description = "Verify the recently rejected  Leave Transaction details by employee")
-		@Description("Test Case #21, Verify the Recently rejected  Leave Transaction details by employee")
+		@Test(priority = 21, description = "Verify the Recently approved  Leave Transaction details by employee")
+		@Description("Test Case #21, Verify the Recently approved  Leave Transaction details by employee")
 		@Severity(SeverityLevel.NORMAL)
-		@Story("Test Case #21, Verify the Recently rejected  Leave Transaction details by employee")
-		public void verifyRejectedLeaveTransactionStatusByEmployee() {
-			logger.info("Starting of verifyRejectedLeaveTransactionStatusByEmployee method");
+		@Story("Test Case #21, Verify the Recently approved  Leave Transaction details by employee")
+		public void verifyApprovedTransactionStatusByEmployee() {
+			logger.info("Starting of verifyApprovedTransactionStatusByEmployee method");
 
 			try {
 				createLeaveRequestPage.clickOnMenuOpenButton();
@@ -624,22 +606,246 @@ package ai.hono.devnt8.create.leaverequest.test;
 
 				Assert.assertEquals(createLeaveRequestPage.getLeaveTransactionsText(),
 						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
-
-				createLeaveRequestPage.clickOnRejectedButton();
+				
+				createLeaveRequestPage.clickOnApprovedButton();
 
 				Assert.assertEquals(createLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
 						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_APPROVED_TEXT));
 
 				Assert.assertEquals(createLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
-						expectedAssertionsProp.getProperty(LEAVE_APPROVAL_STATUS_REJECTED_TEXT));
+						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_APPROVED_TEXT));
 
 			} catch (Exception e) {
 				Assert.fail(
-						"Exception occured while testing verifyRejectedLeaveTransactionStatusByEmployee : " + e.getMessage());
-				logger.error("Error occured while verifyRejectedLeaveTransactionStatusByEmployee " + e);
+						"Exception occured while testing verifyApprovedTransactionStatusByEmployee : " + e.getMessage());
+				logger.error("Error occured while verifyApprovedTransactionStatusByEmployee " + e);
 			}
 
-			logger.info("Starting of verifyRejectedLeaveTransactionStatusByEmployee method");
+			logger.info("Starting of verifyApprovedTransactionStatusByEmployee method");
 		}
-	}
+		
+		@Test(priority = 22, description = "Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		@Description("Test Case #22, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #22, Verify the Leave Transaction details by selecting the Cancel option without entering Reason text by Employee")
+		public void verifyCancelLeaveRequestByWithoutEnteringReason() {
+			logger.info("Starting of verifyCanvcelLeaveRequestByWithoutEnteringReason method");
 
+			try {
+				Assert.assertEquals(createLeaveRequestPage.getApproveLeaveRequestText(),
+						(expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT)));
+
+				createLeaveRequestPage.clickOnCancelRequestButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(PLEASE_ENTER_REMARKS_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCanvcelLeaveRequestByWithoutEnteringReason : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCanvcelLeaveRequestByWithoutEnteringReason " + e);
+			}
+
+			logger.info("Starting of verifyCanvcelLeaveRequestByWithoutEnteringReason method");
+		}
+
+		@Test(priority = 23, description = "Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		@Description("Test Case #23, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		@Severity(SeverityLevel.CRITICAL)
+		@Story("Test Case #23, Verify that the leave transaction details are accurately updated when the employee selects the Cancel option and enters a reason for cancellation")
+		public void verifyCancelLeaveRequestByEmployee() {
+			logger.info("Starting of verifyCancelLeaveRequestByEmployee method");
+
+			try {
+				createLeaveRequestPage.clickOnCloseButton();
+				
+				Assert.assertEquals(createLeaveRequestPage.getApproveLeaveRequestText(),
+						(expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT)));
+
+				createLeaveRequestPage.setLeaveReason(testDataProp.getProperty(REASON_FOR_CANCEL_LEAVE_TEXT));
+				createLeaveRequestPage.clickOnCancelRequestButton();
+
+				Assert.assertEquals(leaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(lEAVE_APPROVAL_STATUS_CANCELLED_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCancelLeaveRequestByEmployee : " + e.getMessage());
+				logger.error("Error occured while verifyCancelLeaveRequestByEmployee " + e);
+			}
+
+			logger.info("Starting of verifyCancelLeaveRequestByEmployee method");
+		}
+		
+		@Test(priority = 24, description = "Verify the Recently cancelled Leave Transaction details by employee")
+		@Description("Test Case #24, Verify the Recently cancelled Leave Transaction details by employee")
+		@Severity(SeverityLevel.NORMAL)
+		@Story("Test Case #24, Verify the Recently cancelled Leave Transaction details by employee")
+		public void verifyCancelledLeaveTransactionStatusByEmployee() {
+			logger.info("Starting of verifyCancelledLeaveTransactionStatusByEmployee method");
+
+			try {
+				createLeaveRequestPage.clickOnMenuOpenButton();
+				createLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
+				createLeaveRequestPage.clickOnLeaveTransactions();
+
+				Assert.assertEquals(createLeaveRequestPage.getLeaveTransactionsText(),
+						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
+				
+				createLeaveRequestPage.clickOnCancellationApprovalPendingButton();
+
+				Assert.assertEquals(createLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVAL_PENDING_TEXT));
+
+				Assert.assertEquals(createLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVAL_PENDING_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail(
+						"Exception occured while testing verifyCancelledLeaveTransactionStatusByEmployee : " + e.getMessage());
+				logger.error("Error occured while verifyCancelledLeaveTransactionStatusByEmployee " + e);
+			}
+
+			logger.info("Starting of verifyCancelledLeaveTransactionStatusByEmployee method");
+		}
+		
+		@Test(priority = 25, description = "Verify the Recently canceled leave request by an employee which is Already Approved at L1")
+		@Description("Test Case #25, Verify the Recently canceled leave request by an employee which is Already Approved at L1")
+		@Severity(SeverityLevel.NORMAL)
+		@Story("Test Case #25, Verify the Recently canceled leave request by an employee which is Already Approved at L1")
+		public void verifyCancelledLeaveRequestDetailsBySelectApproveOption() {
+			logger.info("Starting of verifyCancelledLeaveRequestBySelectApproveOption method");
+
+			try {
+				approverOneCreateLeaveRequestPage.clickOnMenuOpenButton();
+				approverOneCreateLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
+				approverOneCreateLeaveRequestPage.clickOnLeaveTransactions();
+
+				Assert.assertEquals(approverOneCreateLeaveRequestPage.getLeaveTransactionsText(),
+						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
+				
+				Thread.sleep(2000);
+				approverOneLeaveTypePage.clickOnRowsPerPageButton();
+				Thread.sleep(3000);
+				approverOneLeaveTypePage.selectRowsPerPage(testDataProp.getProperty(TWO_ROWS_PER_PAGE_TEXT));
+				Thread.sleep(2000);
+				approverOneCreateLeaveRequestPage.clickOnScroll();
+
+				approverOneCreateLeaveRequestPage.clickOnCancellationApprovalPendingButton();
+
+				Assert.assertEquals(approverOneCreateLeaveRequestPage.getApproveLeaveRequestText(),
+						expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT));
+
+				approverOneCreateLeaveRequestPage.setRemarks(testDataProp.getProperty(APPROVE_REMARKS_TEXT));
+				approverOneCreateLeaveRequestPage.clickOnApproveButton();
+
+				Assert.assertEquals(approverOneLeaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(LEAVE_REQUEST_APPROVED_SUCCESSFULLY_TEXT));
+				
+				approverOneCreateLeaveRequestPage.clickOnCancellationApprovedButton();
+
+				Assert.assertEquals(approverOneCreateLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVED_TEXT));
+
+				Assert.assertEquals(approverOneCreateLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVAL_PENDING_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCancelledLeaveRequestBySelectApproveOption : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCancelledLeaveRequestBySelectApproveOption " + e);
+			}
+
+			logger.info("Starting of verifyCancelledLeaveRequestBySelectApproveOption method");
+		}
+		
+		@Test(priority = 26, description = "Verify the Recently canceled leave request by an employee which is Already Approved at L2")
+		@Description("Test Case #26, Verify the Recently canceled leave request by an employee which is Already Approved at L2")
+		@Severity(SeverityLevel.NORMAL)
+		@Story("Test Case #26, Verify the Recently canceled leave request by an employee which is Already Approved at L2")
+		public void verifyCancellationApprovalPendingLeaveTransactiontDetailsBySelectApproveOptionByLevelTwoApproval() {
+			logger.info("Starting of verifyCancelledLeaveRequestBySelectApproveOption method");
+
+			try {
+				approverTwoCreateLeaveRequestPage.clickOnMenuOpenButton();
+				approverTwoCreateLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
+				approverTwoCreateLeaveRequestPage.clickOnLeaveTransactions();
+
+				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getLeaveTransactionsText(),
+						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
+				
+				Thread.sleep(2000);
+				approverTwoLeaveTypePage.clickOnRowsPerPageButton();
+				Thread.sleep(3000);
+				approverTwoLeaveTypePage.selectRowsPerPage(testDataProp.getProperty(TWO_ROWS_PER_PAGE_TEXT));
+				Thread.sleep(2000);
+				approverTwoCreateLeaveRequestPage.clickOnScroll();
+
+				approverTwoCreateLeaveRequestPage.clickOnCancellationApprovalPendingButton();
+
+				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getApproveLeaveRequestText(),
+						expectedAssertionsProp.getProperty(APPROVE_LEAVE_REQUEST_TEXT));
+
+				approverTwoCreateLeaveRequestPage.setRemarks(testDataProp.getProperty(APPROVE_REMARKS_TEXT));
+				approverTwoCreateLeaveRequestPage.clickOnApproveButton();
+
+				Assert.assertEquals(approverTwoLeaveTypePage.getLeaveToastMessage(),
+						expectedAssertionsProp.getProperty(LEAVE_REQUEST_APPROVED_SUCCESSFULLY_TEXT));
+				
+				approverTwoCreateLeaveRequestPage.clickOnCancellationApprovedButton();
+
+				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVED_TEXT));
+
+				Assert.assertEquals(approverTwoCreateLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVED_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail("Exception occured while testing verifyCancelledLeaveRequestBySelectApproveOption : "
+						+ e.getMessage());
+				logger.error("Error occured while verifyCancelledLeaveRequestBySelectApproveOption " + e);
+			}
+
+			logger.info("Starting of verifyCancelledLeaveRequestBySelectApproveOption method");
+		}
+		
+		@Test(priority = 27, description = "Verify the Cancellation Leave transaction details after approved by level one manager and level two manager from Employee")
+		@Description("Test Case #27, Verify the Leave transaction details after approved by level one manager and level two manager from Employee")
+		@Severity(SeverityLevel.NORMAL)
+		@Story("Test Case #27, Verify the Leave transaction details after approved by level one manager and level two manager from Employee")
+		public void verifyCancellationLeaveTransactionDetailsAfterL1AndL2Approval() {
+			logger.info("Starting of verifyCancellationLeaveTransactionDetailsAfterL1AndL2Approval method");
+
+			try {
+				createLeaveRequestPage.clickOnMenuOpenButton();
+				createLeaveRequestPage.selectHonoMenu(testDataProp.getProperty(LEAVE_TEXT));
+				createLeaveRequestPage.clickOnLeaveTransactions();
+
+				Assert.assertEquals(createLeaveRequestPage.getLeaveTransactionsText(),
+						expectedAssertionsProp.getProperty(LEAVE_TRANSACTIONS_TEXT));
+				
+				createLeaveRequestPage.clickOnCancellationApprovedButton();
+
+				Assert.assertEquals(createLeaveRequestPage.getLevelOneManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVED_TEXT));
+
+				Assert.assertEquals(createLeaveRequestPage.getLevelTwoManagerApprovalLeaveRequestStatus(),
+						expectedAssertionsProp.getProperty(CANCELLATION_APPROVED_TEXT));
+
+			} catch (Exception e) {
+				Assert.fail(
+						"Exception occured while testing verifyCancellationLeaveTransactionDetailsAfterL1AndL2Approval : " + e.getMessage());
+				logger.error("Error occured while verifyCancellationLeaveTransactionDetailsAfterL1AndL2Approval " + e);
+			}
+
+			logger.info("Starting of verifyCancellationLeaveTransactionDetailsAfterL1AndL2Approval method");
+		}
+
+		
+
+		// @AfterClass
+		public void quitDriver() {
+			// quitDriver(driver, WEB_DRIVER.EMPLOYEE_CREATE_LEAVE_REQUEST);
+			logger.debug("Driver quit successfully");
+		}
+
+	}

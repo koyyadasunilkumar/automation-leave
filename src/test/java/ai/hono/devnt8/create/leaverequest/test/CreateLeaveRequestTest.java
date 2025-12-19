@@ -50,7 +50,7 @@ import io.qameta.allure.Epic;
 			private static final Logger logger = Logger.getLogger(CreateLeaveRequestTest.class.getName());
 
 			@BeforeClass
-			@Parameters({ "browser","siteURL","employeeUserName","employeepPssword" })
+			@Parameters({ "browser","siteURL","employeeUserName","employeePassword" })
 			public void initMethodTest(String browser,String siteURL,String userName,String approverPassword) throws Exception {
 				logger.info("Starting of initMethodTest method");
 
